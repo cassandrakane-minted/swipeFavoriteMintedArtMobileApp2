@@ -340,8 +340,24 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
     
     private func handleSwipeBackend(direction: SwipeResultDirection) {
         // TODO: make backend post call depending on direction
-
-        print(direction)
+        // hard code for test
+        let parameters = [
+            "design_id": 123,
+            "device_id": 123,
+            "action": 1
+        ]
+        let url = NSURL(string: "http://424b91e6.ngrok.io/api/hack_design_fav")
+        let request = NSMutableURLRequest(URL: url!)
+        do {
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
+            request.HTTPMethod = "POST"
+            request.HTTPBody = jsonData
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
+            task.resume()
+        } catch {
+            print("something is wrong")
+        }
     }
     
     private func resetViewPositionAndTransformations() {
