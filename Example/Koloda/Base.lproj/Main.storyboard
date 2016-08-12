@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Background Animation View Controller-->
@@ -19,7 +20,22 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jng-cF-Fd5" customClass="CustomKolodaView" customModule="Koloda_Example" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="74" width="320" height="494"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="POr-aP-48i">
+                                        <rect key="frame" x="120" y="207" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="9XG-sY-9G9"/>
+                                            <constraint firstAttribute="height" constant="80" id="bjv-Zn-YfT"/>
+                                            <constraint firstAttribute="width" secondItem="POr-aP-48i" secondAttribute="height" multiplier="1:1" id="pr2-mT-82K"/>
+                                        </constraints>
+                                        <color key="color" red="0.34901960784313724" green="0.49803921568627452" blue="0.11764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                    </activityIndicatorView>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="POr-aP-48i" firstAttribute="centerY" secondItem="Jng-cF-Fd5" secondAttribute="centerY" id="Sew-bv-WQy"/>
+                                    <constraint firstItem="POr-aP-48i" firstAttribute="centerX" secondItem="Jng-cF-Fd5" secondAttribute="centerX" id="oat-QG-dmw"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFs-5J-kjv">
                                 <rect key="frame" x="59" y="484" width="51" height="51"/>
@@ -57,17 +73,10 @@
                                             <action selector="undoButtonTapped" destination="dh2-Wx-deB" eventType="touchUpInside" id="V0e-B4-IqE"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWg-0g-9Qs">
-                                        <rect key="frame" x="106" y="42" width="108.5" height="18"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Minted Art">
-                                                <attributes>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="18" name="Courier"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Minted Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWg-0g-9Qs">
+                                        <rect key="frame" x="116" y="40" width="89.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>

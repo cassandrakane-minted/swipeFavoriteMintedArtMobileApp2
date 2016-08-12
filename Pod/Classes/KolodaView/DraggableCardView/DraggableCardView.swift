@@ -347,7 +347,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         // hard code for test
         let parameters = [
             "design_id": 123,
-            "device_id": 123,
+            "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
             "action": 1
         ]
         let url = NSURL(string: "http://424b91e6.ngrok.io/api/hack_design_fav")
