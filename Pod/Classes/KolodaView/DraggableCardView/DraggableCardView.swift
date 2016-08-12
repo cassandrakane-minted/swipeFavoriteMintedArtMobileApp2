@@ -357,6 +357,10 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         let designInfo = designInfos[currentIndex]
         let design_id = Int(designInfo["design_id_str"]!)!
         
+        let newIndex = currentIndex + 1
+        defaults.setInteger(newIndex, forKey: defaultsKeys.keyTwo)
+        defaults.synchronize()
+        
         var action = 0;
         if direction == SwipeResultDirection.Right {
             action = 1
