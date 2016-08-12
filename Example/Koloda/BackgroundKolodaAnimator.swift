@@ -31,5 +31,4 @@ class BackgroundKolodaAnimator: KolodaViewAnimator {
         }
         card.pop_addAnimation(frameAnimation, forKey: "frameAnimation")
     }
-    
 }
