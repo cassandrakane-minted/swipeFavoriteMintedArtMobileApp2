@@ -373,9 +373,9 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         }
 
         let parameters = [
-            "design_id": 123,
+            "design_id": design_id,
             "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
-            "action": 1
+            "action": action
         ]
         let url = NSURL(string: "http://424b91e6.ngrok.io/api/hack_design_fav")
         let request = NSMutableURLRequest(URL: url!)
