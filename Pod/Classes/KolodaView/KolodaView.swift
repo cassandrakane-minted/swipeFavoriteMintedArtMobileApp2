@@ -58,7 +58,7 @@ public protocol KolodaViewDelegate:class {
 public extension KolodaViewDelegate {
     func koloda(koloda: KolodaView, shouldSwipeCardAtIndex index: UInt, inDirection direction: SwipeResultDirection) -> Bool { return true }
     
-    func koloda(koloda: KolodaView, allowedDirectionsForIndex index: UInt) -> [SwipeResultDirection] { return [.Left, .Right] }
+    func koloda(koloda: KolodaView, allowedDirectionsForIndex index: UInt) -> [SwipeResultDirection] { return [.Left, .Right, .Up] }
     func koloda(koloda: KolodaView, didSwipeCardAtIndex index: UInt, inDirection direction: SwipeResultDirection) {}
     func kolodaDidRunOutOfCards(koloda: KolodaView) {}
     func koloda(koloda: KolodaView, didSelectCardAtIndex index: UInt) {}
@@ -262,7 +262,7 @@ public class KolodaView: UIView, DraggableCardDelegate {
     
     func card(cardAllowedDirections card: DraggableCardView) -> [SwipeResultDirection] {
         let index = currentCardIndex + visibleCards.indexOf(card)!
-        return delegate?.koloda(self, allowedDirectionsForIndex: UInt(index)) ?? [.Left, .Right]
+        return delegate?.koloda(self, allowedDirectionsForIndex: UInt(index)) ?? [.Left, .Right, .Up]
     }
     
     func card(card: DraggableCardView, wasSwipedInDirection direction: SwipeResultDirection) {

@@ -12,80 +12,9 @@ import pop
 import Alamofire
 
 // TODO: hookup with backend
-private var temporaryDesignInfos: Array = [
-    [
-        "artistName": "Annie Walker",
-        "designName": "Wreath of love",
-        "artistLocation": "Dallas, Texas",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/17/02/18/cb486bcb453fc7893124cd1cfc34c615",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_687294_5532e1dea8b00.jpg"
-    ],
-    [
-        "artistName": "Melissa Casey",
-        "designName": "Merry & Happy Holiday",
-        "artistLocation": "Batavia, Illinois",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/16/59/53/9e23a509d96119c0e0ffaa60b1a59e95",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_294616_54bbe16b42144.jpg"
-    ],
-    [
-        "artistName": "Alexandra Dzh",
-        "designName": "Holiday decorations",
-        "artistLocation": "Vienna, Austria",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/21/31/43/6b38bbd0098e62838a2d4dd1141a6bd4",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_598545_5550ebacedd75.jpg"
-    ],
-    [
-        "artistName": "Belia Simm",
-        "designName": "Holiday Gifts",
-        "artistLocation": "Fishkill, New York",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/05/04/35/49/2d1c8bdc6079baf35ad0d35f73eba9e5",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_1025994_25d5e6cad5cd8.jpg"
-    ],
-    [
-        "artistName": "Ampersand Design Studio",
-        "designName": "Paint Strokes",
-        "artistLocation": "Kansas City",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/16/59/05/48794b9de5b2b566f4ed69de1345ffe1",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_163057_50b3ba9db67cc.jpg"
-    ],
-    [
-        "artistName": "Alexandra Dzh",
-        "designName": "Holiday pattern",
-        "artistLocation": "Vienna, Austria",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/21/00/49/cf256295e4e5919071c764dac8590fb2",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_598545_5550ebacedd75.jpg"
-    ],
-    [
-        "artistName": "Melissa Casey",
-        "designName": "Shining Star",
-        "artistLocation": "Batavia, Illinois",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/04/17/27/53/5d8186c5b860cc95af7895b676b3b1fd",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_294616_54bbe16b42144.jpg"
-    ],
-    [
-        "artistName": "Kristen Smith",
-        "designName": "Christmas Crest",
-        "artistLocation": "Augusta, Georgia",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/17/39/40/476f1ee53014ea70f490caefe8bc33c4",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_52505_551186d47bcc9.jpg"
-    ],
-    [
-        "artistName": "Karidy Walker",
-        "designName": "Let's be Jolly",
-        "artistLocation": "Anacortes, Washington",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/16/59/19/2b89a6fcf965865156ee94be305af0f6",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_382687_a5ff5e1d70443.jpg"
-    ],
-    [
-        "artistName": "jeanne smith",
-        "designName": "All I Want for Christmas",
-        "artistLocation": "San Diego, California",
-        "designImgUrl": "http://cdn4.minted.com/2016/08/03/19/05/48/1771bb09f9fe1e20df760abeb1403184",
-        "artistProfileImgUrl": "http://cdn3.minted.com/files/content/designers/200_276464_7939b3b2b85db.jpg"
-    ]
-]
+private var designInfos: [[String : String]] = []
 
-private let numberOfCards: UInt = UInt(temporaryDesignInfos.count)
+private let numberOfCards: UInt = UInt(designInfos.count)
 private let frameAnimationSpringBounciness: CGFloat = 9
 private let frameAnimationSpringSpeed: CGFloat = 16
 private let kolodaCountOfVisibleCards = 2
@@ -97,16 +26,22 @@ class BackgroundAnimationViewController: UIViewController {
     @IBOutlet weak var kolodaView: CustomKolodaView!
     
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
-        Alamofire.request(.GET, "http://e72c94ed.ngrok.io/api/hack_designs")
-            .responseJSON {response in
-                print(response.result.value)
-               // print(response.response)
-              // temporaryDesignInfos = response.result.SUCCESS
-                
-        }
-    }
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated);
+//        getBackendData(setDisplayInfos([[String : String]]))
+//    }
+//    
+//    private func getBackendData(completionHandler: (responseObject: String?, error: NSError?) -> ()) {
+//        Alamofire.request(.GET, "http://e72c94ed.ngrok.io/api/hack_designs")
+//            .responseJSON {response in
+//                designInfos = response.result.value as! [[String : String]]
+//        }
+//    }
+//    
+//    private func setDisplayInfos(info: [[String : String]]) {
+//        designInfos = info
+//        self.view.setNeedsDisplay()
+//    }
     
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -177,7 +112,7 @@ extension BackgroundAnimationViewController: KolodaViewDataSource {
     }
     
     func koloda(koloda: KolodaView, viewForCardAtIndex index: UInt) -> UIView {
-        let designInfo = temporaryDesignInfos[Int(index)]
+        let designInfo = designInfos[Int(index)]
         
         let screenBounds: CGRect = UIScreen.mainScreen().bounds;
         let mainView = UIView(frame: CGRectMake(0, 0, screenBounds.size.width - 20, screenBounds.size.height - 220))

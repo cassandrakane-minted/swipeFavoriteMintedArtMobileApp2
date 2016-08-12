@@ -253,7 +253,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
     //MARK: Private
     
     private var directions: [SwipeResultDirection] {
-        return delegate?.card(cardAllowedDirections: self) ?? [.Left, .Right]
+        return delegate?.card(cardAllowedDirections: self) ?? [.Left, .Right, .Up]
     }
     
     private var dragDirection: SwipeResultDirection? {
@@ -324,6 +324,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
+        handleSwipeBackend(direction)
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
@@ -335,6 +336,12 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
             self.removeFromSuperview()
         }
         layer.pop_addAnimation(translationAnimation, forKey: "swipeTranslationAnimation")
+    }
+    
+    private func handleSwipeBackend(direction: SwipeResultDirection) {
+        // TODO: make backend post call depending on direction
+
+        print(direction)
     }
     
     private func resetViewPositionAndTransformations() {
