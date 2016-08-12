@@ -9,9 +9,10 @@
 import UIKit
 import Koloda
 import pop
+import Alamofire
 
 // TODO: hookup with backend
-private let temporaryDesignInfos: Array = [
+private var temporaryDesignInfos: Array = [
     [
         "artistName": "Annie Walker",
         "designName": "Wreath of love",
@@ -95,6 +96,18 @@ class BackgroundAnimationViewController: UIViewController {
 
     @IBOutlet weak var kolodaView: CustomKolodaView!
     
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        Alamofire.request(.GET, "http://e72c94ed.ngrok.io/api/hack_designs")
+            .responseJSON {response in
+                print(response.result.value)
+               // print(response.response)
+              // temporaryDesignInfos = response.result.SUCCESS
+                
+        }
+    }
+    
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +118,10 @@ class BackgroundAnimationViewController: UIViewController {
         kolodaView.animator = BackgroundKolodaAnimator(koloda: kolodaView)
         
         self.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+
     }
+    
+
     
     
     //MARK: IBActions
