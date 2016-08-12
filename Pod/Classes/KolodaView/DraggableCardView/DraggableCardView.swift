@@ -324,7 +324,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
-        handleSwipeBackend(direction, designInfo: (overlayView?.designInfo)!)
+        handleSwipeBackend(direction)
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
@@ -338,13 +338,36 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         layer.pop_addAnimation(translationAnimation, forKey: "swipeTranslationAnimation")
     }
     
-    private func handleSwipeBackend(direction: SwipeResultDirection, designInfo: [String: String]) {
+    private func handleSwipeBackend(direction: SwipeResultDirection) {
         // TODO: make backend post call depending on direction
         // hard code for test
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        struct defaultsKeys {
+            static let keyOne = "designInfos"
+            static let keyTwo = "currentIndex"
+        }
+
+        let designInfos = defaults.arrayForKey(defaultsKeys.keyOne) as! [[String: String]]
+        let currentIndex = defaults.integerForKey(defaultsKeys.keyTwo)
+        let designInfo = designInfos[currentIndex]
+        let design_id = Int(designInfo["design_id_str"]!)!
+        
+        var action = 0;
+        if direction == SwipeResultDirection.Right {
+            action = 1
+        } else if direction == SwipeResultDirection.Up {
+            action = 2
+        } else if direction == SwipeResultDirection.Left {
+            action = 3
+        } else {
+            action = 0
+        }
+
         let parameters = [
-            "design_id": 123,
+            "design_id": design_id,
             "device_id": 123,
-            "action": 1
+            "action": action
         ]
         let url = NSURL(string: "http://424b91e6.ngrok.io/api/hack_design_fav")
         let request = NSMutableURLRequest(URL: url!)
@@ -358,6 +381,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         } catch {
             print("something is wrong")
         }
+        
     }
     
     private func resetViewPositionAndTransformations() {

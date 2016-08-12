@@ -16,7 +16,8 @@ public class OverlayView: UIView {
         "designName": "",
         "artistLocation": "",
         "designImgUrl": "",
-        "artistProfileImgUrl": ""
+        "artistProfileImgUrl": "",
+        "design_id_str": ""
     ]
     
     @available(*, unavailable, message="Use updateWithProgress(percentage:) instead")

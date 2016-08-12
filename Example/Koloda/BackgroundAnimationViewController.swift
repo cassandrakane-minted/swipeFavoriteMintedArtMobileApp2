@@ -12,15 +12,9 @@ import pop
 import Alamofire
 
 // TODO: hookup with backend
-private var designInfos: [[String : String]] = [[
-    "artistName": "Jennifer Allevato",
-    "designName": "Watercolors Flowers II",
-    "artistLocation": "Alexandria, Virginia",
-    "designImgUrl": "http://minted.community.design.img.archive.dev.s3.amazonaws.com/2016/02/18/17/59/18/09a6201c9c78dd3fad0fd1859516a931",
-    "artistProfileImgUrl": "http://mintedcdn.dev.s3.amazonaws.com/files/content/designers/200_703679_24eaafe533a40.jpg"
-    ]]
+private var designInfosOverlayViews: [OverlayView] = []
 
-private let numberOfCards: UInt = UInt(designInfos.count)
+private let numberOfCards: UInt = UInt(designInfosOverlayViews.count)
 private let frameAnimationSpringBounciness: CGFloat = 9
 private let frameAnimationSpringSpeed: CGFloat = 16
 private let kolodaCountOfVisibleCards = 2
@@ -44,8 +38,20 @@ class BackgroundAnimationViewController: UIViewController {
     }
     
     private func setDisplayInfos(info: [[String : String]]) {
-        designInfos = info
-        print(designInfos);
+        let designInfos = info
+        designInfosOverlayViews = constructOverlayViews(designInfos)
+        
+        struct defaultsKeys {
+            static let keyOne = "designInfos"
+            static let keyTwo = "currentIndex"
+        }
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(designInfos, forKey: defaultsKeys.keyOne)
+        defaults.setInteger(0, forKey: defaultsKeys.keyTwo)
+        
+        defaults.synchronize()
+        
         super.viewDidLoad()
         kolodaView.alphaValueSemiTransparent = kolodaAlphaValueSemiTransparent
         kolodaView.countOfVisibleCards = kolodaCountOfVisibleCards
@@ -54,6 +60,16 @@ class BackgroundAnimationViewController: UIViewController {
         kolodaView.animator = BackgroundKolodaAnimator(koloda: kolodaView)
 
         self.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+    }
+    
+    private func constructOverlayViews(infos: [[String: String]]) -> [OverlayView] {
+        var designOverlayViews: [OverlayView] = []
+        for info in infos {
+            let designOverlayView = OverlayView()
+            designOverlayView.designInfo = info
+            designOverlayViews.append(designOverlayView)
+        }
+        return designOverlayViews
     }
 
     //MARK: IBActions
@@ -109,7 +125,7 @@ extension BackgroundAnimationViewController: KolodaViewDataSource {
     }
 
     func koloda(koloda: KolodaView, viewForCardAtIndex index: UInt) -> UIView {
-        let designInfo = designInfos[Int(index)]
+        let designInfo = designInfosOverlayViews[Int(index)].designInfo
 
         let screenBounds: CGRect = UIScreen.mainScreen().bounds;
         let mainView = UIView(frame: CGRectMake(0, 0, screenBounds.size.width - 20, screenBounds.size.height - 220))
