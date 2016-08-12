@@ -164,7 +164,7 @@ extension BackgroundAnimationViewController: KolodaViewDataSource {
         let designInfo = temporaryDesignInfos[Int(index)]
         
         let screenBounds: CGRect = UIScreen.mainScreen().bounds;
-        let mainView = UIView(frame: CGRectMake(0, 0, screenBounds.size.width - 20, screenBounds.size.height - 200))
+        let mainView = UIView(frame: CGRectMake(0, 0, screenBounds.size.width - 20, screenBounds.size.height - 220))
         
         //get design UIImageView
         var designImage = UIImage()
