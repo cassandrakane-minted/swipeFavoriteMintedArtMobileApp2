@@ -26,25 +26,21 @@ class BackgroundAnimationViewController: UIViewController {
     @IBOutlet weak var kolodaView: CustomKolodaView!
     
     
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated);
-//        getBackendData(setDisplayInfos([[String : String]]))
-//    }
-//    
-//    private func getBackendData(completionHandler: (responseObject: String?, error: NSError?) -> ()) {
-//        Alamofire.request(.GET, "http://e72c94ed.ngrok.io/api/hack_designs")
-//            .responseJSON {response in
-//                designInfos = response.result.value as! [[String : String]]
-//        }
-//    }
-//    
-//    private func setDisplayInfos(info: [[String : String]]) {
-//        designInfos = info
-//        self.view.setNeedsDisplay()
-//    }
-    
     //MARK: Lifecycle
     override func viewDidLoad() {
+        getBackendData(setDisplayInfos)
+    }
+    
+    private func getBackendData(completionHandler: (designInfo: [[String : String]]) -> ()) {
+        Alamofire.request(.GET, "http://424b91e6.ngrok.io/api/hack_designs")
+            .responseJSON {response in
+                completionHandler(designInfo: response.result.value as! [[String : String]])
+        }
+    }
+    
+    private func setDisplayInfos(info: [[String : String]]) {
+        designInfos = info
+        print(designInfos);
         super.viewDidLoad()
         kolodaView.alphaValueSemiTransparent = kolodaAlphaValueSemiTransparent
         kolodaView.countOfVisibleCards = kolodaCountOfVisibleCards
@@ -53,7 +49,6 @@ class BackgroundAnimationViewController: UIViewController {
         kolodaView.animator = BackgroundKolodaAnimator(koloda: kolodaView)
         
         self.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-
     }
     
 

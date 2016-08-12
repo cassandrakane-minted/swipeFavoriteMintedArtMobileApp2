@@ -11,6 +11,13 @@ import UIKit
 public class OverlayView: UIView {
     
     public var overlayState: SwipeResultDirection?
+    public var designInfo: [String : String] = [
+        "artistName": "",
+        "designName": "",
+        "artistLocation": "",
+        "designImgUrl": "",
+        "artistProfileImgUrl": ""
+    ]
     
     @available(*, unavailable, message="Use updateWithProgress(percentage:) instead")
     public var overlayStrength: CGFloat = 0.0

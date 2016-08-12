@@ -324,7 +324,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
-        handleSwipeBackend(direction)
+        handleSwipeBackend(direction, designInfo: (overlayView?.designInfo)!)
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
@@ -338,9 +338,9 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         layer.pop_addAnimation(translationAnimation, forKey: "swipeTranslationAnimation")
     }
     
-    private func handleSwipeBackend(direction: SwipeResultDirection) {
+    private func handleSwipeBackend(direction: SwipeResultDirection, designInfo: [String: String]) {
         // TODO: make backend post call depending on direction
-
+        print(designInfo)
         print(direction)
     }
     
