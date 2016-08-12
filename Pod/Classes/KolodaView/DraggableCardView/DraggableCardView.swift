@@ -324,7 +324,11 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
-        handleSwipeBackend(direction, designInfo: (overlayView?.designInfo)!)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.handleSwipeBackend(direction, designInfo: (self.overlayView?.designInfo)!)
+            }
+        }
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
