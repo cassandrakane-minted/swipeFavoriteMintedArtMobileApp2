@@ -25,7 +25,7 @@ protocol DraggableCardDelegate: class {
 private let rotationMax: CGFloat = 1.0
 private let defaultRotationAngle = CGFloat(M_PI) / 10.0
 private let scaleMin: CGFloat = 0.8
-public let cardSwipeActionAnimationDuration: NSTimeInterval  = 0.4
+public let cardSwipeActionAnimationDuration: NSTimeInterval  = 0.0001
 
 private let screenSize = UIScreen.mainScreen().bounds.size
 
@@ -324,11 +324,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.handleSwipeBackend(direction)
-            }
-        }
+        self.handleSwipeBackend(direction)
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
@@ -361,7 +357,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         defaults.setInteger(newIndex, forKey: defaultsKeys.keyTwo)
         defaults.synchronize()
         
-        var action = 0;
+        var action = 2;
         if direction == SwipeResultDirection.Right {
             action = 1
         } else if direction == SwipeResultDirection.Up {
@@ -369,7 +365,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         } else if direction == SwipeResultDirection.Left {
             action = 3
         } else {
-            action = 0
+            action = 2
         }
 
         let parameters = [
