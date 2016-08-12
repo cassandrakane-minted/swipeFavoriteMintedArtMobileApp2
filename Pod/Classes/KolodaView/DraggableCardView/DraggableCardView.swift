@@ -324,7 +324,11 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
 
     
     private func swipeAction(direction: SwipeResultDirection) {
-        handleSwipeBackend(direction)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.handleSwipeBackend(direction)
+            }
+        }
         overlayView?.overlayState = direction
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedInDirection: direction)
@@ -365,9 +369,9 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         }
 
         let parameters = [
-            "design_id": design_id,
-            "device_id": 123,
-            "action": action
+            "design_id": 123,
+            "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+            "action": 1
         ]
         let url = NSURL(string: "http://424b91e6.ngrok.io/api/hack_design_fav")
         let request = NSMutableURLRequest(URL: url!)
